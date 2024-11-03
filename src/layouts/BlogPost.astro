@@ -24,7 +24,7 @@ const { headings } = await post.render()
 
 <PageLayout meta={{ articleDate, description, ogImage: socialImage, title }}>
 	<div class='w-full'>
-		<Button title='Back' href='/writing' style='button'>
+		<!-- <Button title='Back' href='/writing' style='button'>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				width='14'
@@ -38,13 +38,14 @@ const { headings } = await post.render()
 				>
 				</path>
 			</svg>
-		</Button>
-		<div class='mt-8 gap-x-10 lg:flex lg:items-start'>
+		</Button> -->
+		<div class='mt-8 lg:flex lg:items-start'>
 			{!!headings.length && <TOC headings={headings} />}
 			<article class='flex-grow break-words' data-pagefind-body>
 				<div id='writing-hero'><writingHero content={post} /></div>
-				<div
-					class='prose prose-base prose-zinc mt-12 text-muted-foreground dark:prose-invert prose-headings:font-medium prose-headings:text-foreground prose-headings:before:absolute prose-headings:before:-ms-4 prose-th:before:content-none'
+				<!-- removed mt-12 from class for back button removal, re-add when we add back back. -->
+                <div
+					class='prose prose-base prose-zinc  text-muted-foreground dark:prose-invert prose-headings:font-medium prose-headings:text-foreground prose-headings:before:absolute prose-headings:before:-ms-4 prose-th:before:content-none'
 				>
 					<slot />
 				</div>

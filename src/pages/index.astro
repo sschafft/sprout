@@ -85,10 +85,6 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 					<path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
 					</svg>					  
 				</Label>
-
-				
-
-				
 				</div>
 			</div>
 		</section>
@@ -96,7 +92,8 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 		<Section title='About'>
 			<p class='text-muted-foreground'>
 				I grew up bouncing around Asia & Europe. Professionally, I love exploring the interplay between human & technical systems. 
-				Personally, I attempt to add to the sum total of happiness in the world - starting with my kids & partner.
+				Personally, I attempt to add to the sum total of happiness in the world - starting with my kids & partner.				
+                <a href="/writing/about-me-detail/">🐼</a>
 			</p>
 		</Section>
 		<!-- {
@@ -113,6 +110,23 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 			)
 		} -->
 
+        <Section title='Projects'>
+			<div class='flex flex-col gap-y-3 sm:flex-row sm:gap-x-3 sm:gap-y-0'>
+				<ProjectCard
+					href='https://www.modelrecord.com'
+					heading='Unified Model Records'
+					subheading='Building infrastructure to improve model metadata & provenance.'
+					class='w-full sm:w-1/2'
+				/>
+				<ProjectCard
+					href='https://read.fluxcollective.org/'
+					heading='The FLUX Review'
+					subheading='Part of a group of system thinkers writing a weekly newsletter.'
+					class='w-full sm:w-1/2'
+				/>
+			</div>
+		</Section>
+        
 		<Section title='Recent' subtitle='Experience'>
 			<Card
 				heading='Data & Tech Lead'
@@ -176,23 +190,6 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 				altText='University of British Columbia'
 				imageClass='h-12 w-auto md:-left-16'
 			/>
-		</Section>
-
-		<Section title='Projects'>
-			<div class='flex flex-col gap-y-3 sm:flex-row sm:gap-x-3 sm:gap-y-0'>
-				<ProjectCard
-					href='https://www.modelrecord.com'
-					heading='Unified Model Records'
-					subheading='Building infrastructure to improve model metadata & provenance.'
-					class='w-full sm:w-1/2'
-				/>
-				<ProjectCard
-					href='https://read.fluxcollective.org/'
-					heading='The FLUX Review'
-					subheading='Part of a group of system thinkers writing a weekly newsletter.'
-					class='w-full sm:w-1/2'
-				/>
-			</div>
 		</Section>
 
 		<!-- <Section title='Certifications'>
