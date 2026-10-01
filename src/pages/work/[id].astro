@@ -1,0 +1,316 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { render } from 'astro:content'
+import KindTag from '@/components/KindTag.astro'
+import ProjectPreview from '@/components/ProjectPreview.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getPersonLinks, getProjects, getSite, type NumberedProject } from '@/lib/content'
+
+export const getStaticPaths = (async () => {
+	const site = await getSite()
+	const projects = await getProjects(site)
+	return projects.map((project, i) => ({
+		params: { id: project.entry.id },
+		props: {
+			project,
+			total: String(projects.length).padStart(2, '0'),
+			// Previous / next wrap around the ends of the list.
+			prev: projects[(i - 1 + projects.length) % projects.length]!,
+			next: projects[(i + 1) % projects.length]!
+		}
+	}))
+}) satisfies GetStaticPaths
+
+interface Props {
+	project: NumberedProject
+	total: string
+	prev: NumberedProject
+	next: NumberedProject
+}
+
+const { project, total, prev, next } = Astro.props
+const { entry, n } = project
+const p = entry.data
+
+const site = await getSite()
+const personLinks = await getPersonLinks()
+const { Content } = await render(entry)
+
+const credits = p.credits.map((credit) => ({
+	role: credit.role,
+	names: [...(credit.people ?? []), ...(credit.note ? [credit.note] : [])].map((name) => ({
+		name,
+		href: personLinks.get(name)
+	}))
+}))
+---
+
+<BaseLayout title={p.title} description={p.tagline}>
+	<nav slot="nav" aria-label="Work">
+		<span class="position">{n} of {total}</span>
+		<a class="plain accent" href="/#work">All work</a>
+	</nav>
+
+	<article>
+		<header class="intro">
+			<div class="kicker">
+				<KindTag kind={p.kind} label={site.kinds[p.kind]!} size="md" />
+				<span>{p.kicker}</span>
+			</div>
+			<h1>{p.title}<span class="accent">.</span></h1>
+			<p class="tagline">{p.tagline}</p>
+		</header>
+
+		{
+			p.meta.length > 0 && (
+				<dl class="cards meta">
+					{p.meta.map((item) => (
+						<div class="card">
+							<dt class="card-label">{item.label}</dt>
+							<dd class="card-text">{item.value}</dd>
+						</div>
+					))}
+				</dl>
+			)
+		}
+
+		<figure class="lead">
+			<ProjectPreview project={entry} variant="hero" />
+			<figcaption>
+				<span>{p.heroCaption}</span>
+				<span class="lead-links">
+					{p.links.map((link) => <a class="accent" href={link.href}>{link.label}</a>)}
+				</span>
+			</figcaption>
+		</figure>
+
+		<div class="prose"><Content /></div>
+
+		{
+			p.stats.length > 0 && (
+				<div class="cards stats">
+					{p.stats.map((stat) => (
+						<div class="card stat">
+							<div class="stat-value">{stat.value}</div>
+							<div class="stat-label">{stat.label}</div>
+						</div>
+					))}
+				</div>
+			)
+		}
+
+		{
+			credits.length > 0 && (
+				<section class="credits">
+					<div class="bar">
+						<h2>Credits</h2>
+						<span class="bar-note">The people and partners behind it.</span>
+					</div>
+					{credits.map((credit) => (
+						<div class="credit">
+							<span class="role">{credit.role}</span>
+							<div class="names">
+								{credit.names.map(({ name, href }) =>
+									href ? (
+										<a class="chip" href={href}>
+											{name} ↗
+										</a>
+									) : (
+										<span class="chip">{name}</span>
+									)
+								)}
+							</div>
+						</div>
+					))}
+				</section>
+			)
+		}
+	</article>
+
+	<nav class="pager" aria-label="More work">
+		<a class="plain" href={prev.href}>
+			<div class="pager-label">← Previous · {prev.n}</div>
+			<div class="pager-title">{prev.entry.data.title}</div>
+		</a>
+		<a class="plain next" href={next.href}>
+			<div class="pager-label">Next · {next.n} →</div>
+			<div class="pager-title">{next.entry.data.title}</div>
+		</a>
+	</nav>
+</BaseLayout>
+
+<style>
+	nav[slot='nav'],
+	nav:not(.pager) {
+		display: flex;
+		gap: 24px;
+		align-items: center;
+		color: var(--muted);
+	}
+
+	.position {
+		white-space: nowrap;
+	}
+
+	.intro {
+		padding: clamp(64px, 9vw, 104px) 0 48px;
+		max-width: 980px;
+	}
+
+	.kicker {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		margin-bottom: 22px;
+		font-size: 13px;
+		color: var(--muted);
+	}
+
+	h1 {
+		font-weight: 500;
+		font-size: clamp(44px, 6vw, 72px);
+		line-height: 1.03;
+		letter-spacing: -0.03em;
+		margin-bottom: 24px;
+		text-wrap: balance;
+	}
+
+	.tagline {
+		font-size: clamp(20px, 2.2vw, 26px);
+		line-height: 1.4;
+		letter-spacing: -0.01em;
+		color: var(--ink-2);
+		text-wrap: pretty;
+	}
+
+	.meta {
+		margin: 0 0 40px;
+	}
+
+	.meta dd {
+		margin: 0;
+	}
+
+	.lead {
+		margin: 0 0 96px;
+	}
+
+	.lead figcaption {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px 24px;
+		margin-top: 12px;
+		font-size: 13px;
+		color: var(--muted);
+	}
+
+	.lead-links {
+		display: flex;
+		gap: 18px;
+		font-weight: 500;
+	}
+
+	.stats {
+		margin-top: 64px;
+	}
+
+	.stat {
+		padding: 22px 24px;
+	}
+
+	.stat-value {
+		font-weight: 500;
+		font-size: 44px;
+		letter-spacing: -0.03em;
+		line-height: 1;
+		color: var(--accent);
+	}
+
+	.stat-label {
+		font-size: 15px;
+		color: var(--ink-2);
+		margin-top: 10px;
+		line-height: 1.45;
+	}
+
+	.credits {
+		margin-top: var(--section-gap);
+	}
+
+	.credit {
+		display: grid;
+		grid-template-columns: 32px minmax(0, 1fr) minmax(0, 1.7fr);
+		gap: var(--col-gap);
+		padding: 14px 0;
+		border-top: 1px solid var(--line);
+		font-size: 15px;
+		line-height: 1.5;
+	}
+
+	.role {
+		grid-column: 2;
+		color: var(--muted);
+	}
+
+	.names {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.names .chip {
+		background: var(--surface-2);
+		color: var(--ink);
+		padding: 3px 12px;
+		font-size: 14px;
+	}
+
+	.names a.chip:hover {
+		color: var(--accent);
+	}
+
+	.pager {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 16px;
+		margin-top: var(--section-gap);
+	}
+
+	.pager a {
+		background: var(--surface);
+		border-radius: var(--radius);
+		padding: 22px 24px;
+	}
+
+	.pager .next {
+		text-align: right;
+	}
+
+	.pager-label {
+		font-size: 13px;
+		color: var(--muted);
+		margin-bottom: 6px;
+	}
+
+	.pager-title {
+		font-size: 24px;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+	}
+
+	@media (max-width: 720px) {
+		.lead {
+			margin-bottom: 56px;
+		}
+
+		.credit {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 8px;
+		}
+
+		.role {
+			grid-column: 1;
+		}
+	}
+</style>

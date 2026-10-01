@@ -1,42 +1,61 @@
-# Scott Schaffter Resume Site
+# scottschaffter.com
 
-## Dev Notes
-- Used astro.build
+Personal site for Scott Schaffter. Built with [Astro](https://astro.build), deployed on Netlify.
 
-- To run local dev server run `yarn dev`
+```sh
+npm install
+npm run dev       # http://localhost:4321
+npm run build     # type-check, validate content, build to dist/
+npm run preview   # serve the build
+```
 
-## Editing guide
+Needs Node 22.12 or newer.
 
-### Site info
+## Editing the site
 
-To edit site info such as site title and description, edit the `src/site.config.ts` file.
+All words and images live in `src/content/` and `src/assets/`. You should not need to open a component to change copy.
 
-### Page contents
+| To change | Edit |
+| --- | --- |
+| Header links, footer links, group and tag labels | `src/content/site.yaml` |
+| Home page headline, facts, experience, About blurb, special thanks | `src/content/home.yaml` |
+| A case study, and its row in the work list | `src/content/projects/<id>.md` |
+| The People grid (extra chips, links, who is hidden) | `src/content/people.yaml` |
+| The long About page (the panda) | `src/content/pages/about.md` |
+| Images | `src/assets/work/` |
+| Colours, type, spacing | `src/styles/global.css` |
 
-To edit the resume homepage content and design, edit the `src/pages/index.astro` file.
+### Add a project
 
-### Page components
+1. Copy an existing file in `src/content/projects/` and rename it. The filename is the URL: `tela.md` becomes `/work/tela/`.
+2. Fill in the fields at the top. `group` and `kind` must match keys in `site.yaml`. `started`, `ended` and `ongoing` decide where it sorts.
+3. Write the body. Each `## Heading` becomes a numbered section.
 
-To edit page components found site-wide such as the card used in the homepage, edit the files found in the `src/components/` directory.
+The preview tile shows the `hero` image. For a project with a live site, take a 1280×800 screenshot and use that; sites are never embedded.
 
-### Layouts
+### Add images to a case study
 
-To edit the base layouts of all pages, edit the `src/layouts/BaseLayout.astro` file.
+Put the file in `src/assets/work/` and reference it from the Markdown. Images on consecutive lines form a grid, and the alt text is shown as the caption:
 
-To edit the layout of a blog article, edit the `src/layouts/BlogPost.astro` file.
+```md
+![Daily summary](../../assets/work/tela-summary.jpeg)
+![Symptom data over time](../../assets/work/tela-data.jpeg)
+```
 
-### Blog content
+Images are resized and converted to WebP at build time, so add the largest version you have.
 
-To add blog content, insert `.md` files in the `src/content/` directory.
+### People
 
-To add images in blog articles, insert a folder in the `src/content/` directory, add both the `.md` and image files into the new folder, and reference the image in your `.md` file.
+Anyone listed under `people:` in a project's credits appears in the People grid automatically. Use `people.yaml` to add extra chips (`also:`), a personal link (`href:`), or to keep someone out of the grid (`hidden: true`).
 
-## Theming
+### If the build fails
 
-To change the theme colours of the site, edit the `src/styles/app.css` file.
+Content is checked against the schemas in `src/content.config.ts`. The error names the file and the field, for example a `kind` that is not in `site.yaml` or an image path that does not exist.
 
-To change the fonts of the site, add your font files into `/public`, add it as a `@font-face` in the `src/styles/app.css` file, as a `fontFamily` in the `tailwind.config.js` file, and apply the new font class to the `body` tag in the `src/layouts/BaseLayout.astro` file.
+## Analytics
 
+PostHog loads only when `PUBLIC_POSTHOG_KEY` is set at build time. `netlify.toml` sets it for production deploys only, so local dev and deploy previews are not counted. To test locally, copy `.env.example` to `.env` and add the key.
 
-## Credits
-- [resume-theme](https://github.com/srleom/astro-theme-resume) for core theme
+## More
+
+`docs/TDD.md` explains the architecture and why it is built this way.

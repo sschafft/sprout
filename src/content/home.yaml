@@ -1,0 +1,58 @@
+# Copy for the home page. The work list itself is built from content/projects/.
+
+# A trailing full stop is drawn in the accent colour.
+headline: I build software where people and systems dance.
+
+# Round portrait beside the headline. Path is relative to this file.
+photo: ../assets/profile.jpeg
+photoAlt: Scott Schaffter
+
+facts:
+  - label: Now
+    text: Staff Software Engineer & TL, Google Sustainability
+  - label: Before
+    text: Google PeopleDev · co-founded Bivee
+  - label: Based
+    text: Ann Arbor, Michigan
+
+work:
+  heading: Work
+  allLabel: All
+  countLabel: projects
+
+experience:
+  heading: Experience
+  jobs:
+    - years: 2023 — now
+      role: Staff Software Engineer & TL
+      org: Google Sustainability
+      note: Data and software infrastructure behind Google’s sustainability targets.
+    - years: 2019 — 2023
+      role: Technical Program Manager & Engineer
+      org: Google PeopleDev Tech
+      note: Led the technical team behind Google’s coaching, mentorship, and cohort tools.
+    - years: 2013 — 2019
+      role: Managing Director & Engineering Lead
+      org: Bivee, now Høst (post sale)
+      note: Co-founded a human-centered design studio building web apps for international development. Sold to a partner.
+  earlierLabel: Earlier
+  earlier:
+    - title: PSI
+      note: Built award-winning learning systems for Population Services International’s global health staff.
+      href: https://www.psi.org/
+    - title: Teaching English
+      note: Taught English in El Salvador, Kyrgyzstan, and China.
+
+people:
+  heading: People
+  intro: The people around me make me who I am, and I'm grateful to mostly not have to work alone. Here are some of the people I've made things with.
+  thanksLabel: Special thanks
+  thanksText: To the people I'm building my most complex project with.
+  family:
+    - Taylor Schaffter
+    - Calvin Schaffter
+    - June Schaffter
+
+about:
+  heading: About
+  text: I grew up across Asia and Europe, studied how organizations change, and have spent my career building software that helps people do their work together. I hold an MS in Organization Development from American University and a BCom from the University of British Columbia.

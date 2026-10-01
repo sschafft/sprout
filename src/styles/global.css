@@ -1,0 +1,334 @@
+/*
+ * Design tokens and base styles. Colours, type and spacing are defined once here;
+ * components only reference the variables.
+ */
+
+:root {
+	/* Surfaces */
+	--bg: #17181a;
+	--surface: #1f2023;
+	--surface-2: #26272a;
+	--line: #2b2c2f;
+	--line-strong: #eceae4;
+
+	/* Text */
+	--ink: #eceae4;
+	--ink-2: #cac7bf;
+	--muted: #9d9a92;
+	--underline: #4a4b4f;
+
+	/* Accent */
+	--accent: #e8c547;
+	--accent-soft: rgba(232, 197, 71, 0.12);
+
+	/* Tag kinds: ink / background */
+	--kind-live: #9be3a8;
+	--kind-live-bg: rgba(123, 216, 143, 0.14);
+	--kind-private: #cac7bf;
+	--kind-private-bg: rgba(255, 255, 255, 0.08);
+	--kind-client: #a9cbf0;
+	--kind-client-bg: rgba(143, 184, 232, 0.14);
+	--kind-advisor: #e8c547;
+	--kind-advisor-bg: rgba(232, 197, 71, 0.14);
+	--kind-company: #e8b4f0;
+	--kind-company-bg: rgba(232, 180, 240, 0.14);
+	--kind-nonprofit: #f0c8a0;
+	--kind-nonprofit-bg: rgba(240, 200, 160, 0.14);
+
+	--font: 'IBM Plex Sans', system-ui, sans-serif;
+	--radius: 12px;
+	--radius-sm: 8px;
+	--pill: 99px;
+	--page: 1280px;
+	--gutter: clamp(20px, 5vw, 64px);
+	--col-gap: clamp(16px, 2.4vw, 28px);
+	--section-gap: 88px;
+
+	color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	/* Keeps anchor targets (#work, #people, …) clear of the sticky header. */
+	scroll-padding-top: 96px;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--ink);
+	font-family: var(--font);
+	-webkit-font-smoothing: antialiased;
+}
+
+a {
+	color: var(--ink);
+	text-decoration: underline;
+	text-decoration-color: var(--underline);
+	text-underline-offset: 3px;
+}
+
+a:hover {
+	color: var(--accent);
+	text-decoration-color: var(--accent);
+}
+
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+img {
+	max-width: 100%;
+}
+
+h1,
+h2,
+p {
+	margin: 0;
+}
+
+.page {
+	max-width: var(--page);
+	margin: 0 auto;
+	padding: 0 var(--gutter);
+}
+
+.accent {
+	color: var(--accent);
+}
+
+.plain {
+	text-decoration: none;
+}
+
+.skip-link {
+	position: absolute;
+	left: -999px;
+	top: 8px;
+	background: var(--accent);
+	color: var(--bg);
+	padding: 8px 14px;
+	border-radius: var(--radius-sm);
+	z-index: 10;
+}
+
+.skip-link:focus {
+	left: 8px;
+}
+
+/* Section heading bar: strong rule, title, optional trailing content. */
+.bar {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 8px 20px;
+	padding: 16px 0;
+	border-top: 1px solid var(--line-strong);
+}
+
+.bar h2 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.bar-note {
+	font-size: 14px;
+	color: var(--muted);
+}
+
+/* Small label-over-value card. */
+.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 16px;
+}
+
+.card {
+	display: block;
+	background: var(--surface);
+	border-radius: var(--radius);
+	padding: 16px 20px;
+	text-decoration: none;
+}
+
+.card-label {
+	font-size: 12px;
+	color: var(--muted);
+	margin-bottom: 6px;
+}
+
+.card-text {
+	font-size: 15.5px;
+	line-height: 1.45;
+}
+
+a.card .card-text {
+	color: var(--accent);
+}
+
+.chip {
+	display: inline-block;
+	border-radius: var(--pill);
+	text-decoration: none;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/*
+ * Long-form Markdown (case studies, About).
+ * The Markdown renders as flat siblings: h2, p, p, div.gallery, h2, …
+ * The grid places each heading beside its paragraphs and numbers it,
+ * so authors only ever write `## Heading` and text.
+ */
+.prose {
+	display: grid;
+	grid-template-columns: 32px minmax(0, 1fr) minmax(0, 1.7fr);
+	column-gap: var(--col-gap);
+	row-gap: 16px;
+	container-type: inline-size;
+	counter-reset: section;
+}
+
+.prose > * {
+	grid-column: 3;
+}
+
+.prose > h2 {
+	grid-column: 1 / 3;
+	display: grid;
+	grid-template-columns: subgrid;
+	align-items: start;
+	position: relative;
+	padding-top: 32px;
+	margin-top: 24px;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 1.25;
+	letter-spacing: -0.01em;
+	text-wrap: balance;
+	counter-increment: section;
+}
+
+.prose > h2:first-child,
+.prose > h2:first-child + * {
+	margin-top: 0;
+}
+
+.prose > h2::before {
+	content: counter(section, decimal-leading-zero);
+	font-size: 13px;
+	font-weight: 400;
+	letter-spacing: 0;
+	color: var(--muted);
+	padding-top: 5px;
+}
+
+/* The rule above each section spans the full width, not just the heading's columns. */
+.prose > h2::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100cqw;
+	border-top: 1px solid var(--line);
+}
+
+/* The first block beside a heading takes the same offsets, so the two line up. */
+.prose > h2 + * {
+	padding-top: 32px;
+	margin-top: 24px;
+}
+
+.prose > p,
+.prose > ul,
+.prose > ol {
+	font-size: 17px;
+	line-height: 1.7;
+	color: var(--ink-2);
+	max-width: 68ch;
+	text-wrap: pretty;
+}
+
+.prose > ul,
+.prose > ol {
+	margin: 0;
+	padding-left: 1.2em;
+}
+
+.prose > .gallery {
+	grid-column: 1 / -1;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 16px;
+	margin-top: 24px;
+	padding-top: 0;
+}
+
+.prose > .gallery + h2,
+.prose > .gallery + h2 + * {
+	margin-top: 40px;
+}
+
+.gallery figure {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.gallery img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	background: var(--surface-2);
+	border-radius: var(--radius);
+}
+
+.gallery figcaption {
+	font-size: 13px;
+	color: var(--muted);
+}
+
+@media (max-width: 720px) {
+	.prose {
+		grid-template-columns: 32px minmax(0, 1fr);
+	}
+
+	.prose > * {
+		grid-column: 2;
+	}
+
+	.prose > h2 {
+		grid-column: 1 / -1;
+	}
+
+	.prose > h2 + *,
+	.prose > .gallery + h2 + * {
+		padding-top: 0;
+		margin-top: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}

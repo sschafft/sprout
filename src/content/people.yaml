@@ -1,0 +1,68 @@
+# The People grid on the home page.
+#
+# Anyone credited under `people:` in a project file appears automatically, with a
+# chip for each project. This file is only for the extras:
+#
+#   href    their own site (the name becomes a link, here and on case studies)
+#   hidden  keep them credited on case studies but out of the grid
+#   also    more chips for their card. A project id (the filename in
+#           content/projects, e.g. `smash`) links to that case study;
+#           anything else is shown as plain text.
+
+people:
+  - name: Mike Cobb
+    also: [Google Sustainability, Google PeopleDev]
+  - name: Vrushali Gaud
+    also: [smash, Google Sustainability]
+  - name: Arsham Skrenes
+    also: [Bivee, PSI, LFL / Google, Skis]
+  - name: Dart Lindsey
+    also: [Google PeopleDev, flux, smash]
+  - name: John Dong
+    also: [LFL / Google]
+  - name: Ahrav Dutta
+    also: [LFL / Google, umr, jetty]
+  - name: Kamran Hakiman
+    also: [Bivee, flux, Mountain biking]
+  - name: Spencer Pittman
+    also: [Skis, flux]
+  - name: Jay Perry
+    href: https://design.jayperry.works/
+    also: [Bivee, LFL / Google, PSI]
+  - name: Jon Lebensold
+    also: [jetty, umr, smash, pelicanbid, tela, flux, Google, StarCraft, Skis]
+  - name: Keyu Wang
+    also: [smash, umr]
+  - name: Kevin Schaffter
+    also: [musaid, Skis]
+  - name: Maya Razon
+    also: [smash, Google PeopleDev]
+  - name: Rawan Hakeem
+    also: [smash, Google PeopleDev]
+  - name: Abdullah Norozi Iranzad
+    also: [smash, LFL / Google, Bivee]
+  - name: Christie Mangir
+    also: [tela, Bivee]
+  - name: Helly Stoyanova
+    also: [Bivee, tela, pelicanbid]
+  - name: Rahmin Bender
+    also: [Bivee]
+
+  # Credited on case studies, not shown in the grid.
+  - name: Josiah Jost
+    href: https://siahdesign.com/
+    hidden: true
+  - name: Alexandre Siqueira
+    href: https://cargocollective.com/alexandresiqueira
+    hidden: true
+  - name: Tanya Scobie-Oliveira
+    hidden: true
+  - name: Haley Cline
+    hidden: true
+  - name: Nicholas Kingston
+    hidden: true
+
+  # Organisations: listed only so their name links on case studies.
+  - name: Aten Design Group
+    href: https://atendesigngroup.com/
+    hidden: true
