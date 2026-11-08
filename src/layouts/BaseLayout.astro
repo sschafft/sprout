@@ -1,35 +1,83 @@
 ---
-import type { SiteMeta } from '@/types'
+import '@fontsource/ibm-plex-sans/400.css'
+import '@fontsource/ibm-plex-sans/400-italic.css'
+import '@fontsource/ibm-plex-sans/500.css'
+import '@fontsource/ibm-plex-sans/600.css'
+import '@/styles/global.css'
 
-import BaseHead from '@/components/BaseHead.astro'
-import Footer from '@/components/layout/Footer.astro'
-import Header from '@/components/layout/Header.astro'
-import ThemeProvider from '@/components/ThemeProvider.astro'
-
-import { siteConfig } from '@/site-config'
+import Analytics from '@/components/Analytics.astro'
+import Footer from '@/components/Footer.astro'
+import Header from '@/components/Header.astro'
+import { getSite } from '@/lib/content'
 
 interface Props {
-	meta: SiteMeta
+	/** Page title. Omit on the home page to use the site title alone. */
+	title?: string
+	description?: string
+	/** Set false on the page the footer panda links to. */
+	pandaLink?: boolean
 }
 
-const {
-	meta: { articleDate, description = siteConfig.description, ogImage, title }
-} = Astro.props
+const site = await getSite()
+const { title, description = site.description, pandaLink = true } = Astro.props
+const fullTitle = title ? `${title} · ${site.title}` : site.title
+const canonical = new URL(Astro.url.pathname, Astro.site)
+const socialImage = new URL('/social-card.png', Astro.site)
 ---
 
-<html lang={siteConfig.lang} class=''>
+<!doctype html>
+<html lang="en">
 	<head>
-		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
-	</head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		<meta name="theme-color" content="#17181a" />
 
-	<body class='flex justify-center bg-background'>
-		<ThemeProvider />
-		<main
-			class='flex min-h-screen w-screen max-w-[60rem] flex-col items-center px-6 pb-10 pt-7 font-satoshi text-[0.92rem] leading-relaxed sm:px-10 lg:px-10'
-		>
-			<Header />
-			<slot />
-			<Footer />
-		</main>
+		<link rel="icon" href="/favicon/favicon.ico" sizes="32x32" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+		<link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+		<link rel="manifest" href="/favicon/site.webmanifest" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={site.title} />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={socialImage} />
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<Analytics />
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Skip to content</a>
+		<div class="page">
+			<Header name={site.name}><slot name="nav" /></Header>
+			<main id="main"><slot /></main>
+			<Footer contact={site.contact} copyright={site.copyright} note={site.footerNote} pandaLink={pandaLink} />
+		</div>
+
+		<script>
+			// Scales fixed-size previews (the Pelicash mock) to their frame.
+			// Each [data-fit] element is laid out at its natural width, given in the attribute.
+			const fit = (el: HTMLElement) => {
+				const frame = el.parentElement
+				// A hidden frame has no width yet; the observer fires again once it is shown.
+				if (frame?.clientWidth) el.style.zoom = String(frame.clientWidth / Number(el.dataset.fit))
+			}
+			const observer = new ResizeObserver((entries) => {
+				for (const entry of entries) {
+					const el = entry.target.querySelector<HTMLElement>(':scope > [data-fit]')
+					if (el) fit(el)
+				}
+			})
+			document.querySelectorAll<HTMLElement>('[data-fit]').forEach((el) => {
+				fit(el)
+				if (el.parentElement) observer.observe(el.parentElement)
+			})
+		</script>
 	</body>
 </html>

@@ -1,3 +1,29 @@
 [build]
-  command = "yarn run build"
+  command = "npm run build"
   publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# PostHog only records the live site. Deploy previews, branch deploys and local
+# dev build without a key, so the snippet is left out entirely (see src/components/Analytics.astro).
+# The project token is a public, write-only client key and is safe to commit.
+[context.production.environment]
+  PUBLIC_POSTHOG_KEY = "phc_mTtbWcMKy7by2bZsP68DJRJKwRvJ9AybvdR7XqqQ8TGU"
+  PUBLIC_POSTHOG_HOST = "https://us.i.posthog.com"
+
+# The old site's long-form about post now lives at /about/.
+[[redirects]]
+  from = "/writing/about-me-detail/*"
+  to = "/about/"
+  status = 301
+
+[[redirects]]
+  from = "/writing/*"
+  to = "/"
+  status = 301
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

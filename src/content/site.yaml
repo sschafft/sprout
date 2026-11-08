@@ -1,0 +1,42 @@
+# Site-wide text: header, footer, and the labels used for work groups and tags.
+
+name: Scott Schaffter
+title: Scott Schaffter
+description: Scott Schaffter is a Staff Software Engineer & TL at Google Sustainability. Data infrastructure by day, an AI bidding tool by night; previously Google PeopleDev and co-founder of Bivee.
+
+# Header links on the home page. `href` can be a section anchor or any URL.
+nav:
+  - { label: Experience, href: '#experience' }
+  - { label: Work, href: '#work' }
+  - { label: People, href: '#people' }
+  - { label: Contact, href: '#contact' }
+
+# Footer links, in order.
+contact:
+  - { label: scott@schaffters.com, href: 'mailto:scott@schaffters.com' }
+  - { label: LinkedIn, href: 'https://www.linkedin.com/in/sschafft/' }
+  - { label: GitHub, href: 'https://github.com/sschafft' }
+
+copyright: © 2026
+footerNote: Personal site; views my own.
+
+# Work list groups, in the order they appear. A project picks one with `group:`.
+groups:
+  recent:
+    label: Recent
+    note: Research, community, and side projects
+  other:
+    label: Other companies
+    note: Products and organizations beyond Bivee and Google
+  bivee:
+    label: Bivee
+    note: Consulting, 2013–2019 · now Høst (post sale)
+
+# Tag labels. A project picks one with `kind:`. Colours are in src/styles/global.css.
+kinds:
+  live: Live
+  private: Private
+  client: Client work
+  advisor: Advisor
+  company: Company
+  nonprofit: Non-profit

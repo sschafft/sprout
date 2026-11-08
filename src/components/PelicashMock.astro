@@ -1,0 +1,511 @@
+---
+/**
+ * A self-contained, interactive mock of the Pelicash app, shown in place of a
+ * screenshot because the real thing is private. All figures are synthetic.
+ * It keeps Pelicash's own look (light, serif) rather than this site's tokens.
+ */
+import '@fontsource-variable/newsreader'
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/500.css'
+import '@fontsource/inter/600.css'
+
+interface Props {
+	/** Non-interactive, for the small work list tile. */
+	inert?: boolean
+}
+
+const { inert = false } = Astro.props
+
+const nav = [
+	{ label: 'Overview' },
+	{ label: 'Retirement', screen: 'retirement' },
+	{ label: 'Today', screen: 'today' },
+	{ label: 'Withdraw', screen: 'withdraw' },
+	{ label: 'Investments' },
+	{ label: 'Advisor' }
+]
+
+// [month, income, spending] in $ thousands. The last three months are forecast.
+const cashflow: [string, number, number][] = [
+	['Jan', 22.4, 15.1],
+	['Feb', 22.4, 14.2],
+	['Mar', 38.0, 15.8],
+	['Apr', 22.4, 14.9],
+	['May', 22.4, 16.3],
+	['Jun', 22.4, 15.4],
+	['Jul', 22.4, 17.1],
+	['Aug', 22.4, 23.9],
+	['Sep', 22.4, 13.9],
+	['Oct', 22.4, 15.5],
+	['Nov', 22.4, 16.0],
+	['Dec', 24.1, 18.2]
+]
+const months = cashflow.map(([label, income, spend], i) => ({
+	label,
+	income: income.toFixed(1),
+	spend: spend.toFixed(1),
+	saved: (income - spend).toFixed(1),
+	forecast: i > 8,
+	outlier: label === 'Aug'
+}))
+
+const doors = [
+	{ name: 'Taxable brokerage', bal: '$612k', rule: 'Anytime. Long-term gains at 0–15% while income is low.', opens: 'Now', open: true },
+	{ name: '401(k), current employer', bal: '$1.14M', rule: 'Rule of 55: penalty-free after leaving the job at 55+.', opens: '55', open: true },
+	{ name: 'Roth IRA', bal: '$148k', rule: 'Contributions anytime. Conversions unlock after 5 years.', opens: '55–60', open: false },
+	{ name: 'Traditional IRA', bal: '$386k', rule: '72(t) payments, or wait. Feeds the Roth ladder.', opens: '59½', open: false },
+	{ name: 'HSA', bal: '$94k', rule: 'Medical costs anytime; any use from 65.', opens: '65', open: false }
+]
+---
+
+<div class="pm" data-fit="1040" data-pelicash inert={inert} aria-hidden={inert ? 'true' : undefined}>
+	<div class="top">
+		<span class="brand">Pelicash</span>
+		<div class="nav">
+			{
+				nav.map((item) =>
+					item.screen ? (
+						<button type="button" data-screen={item.screen} aria-pressed={item.screen === 'retirement'}>
+							{item.label}
+						</button>
+					) : (
+						<span class="off">{item.label}</span>
+					)
+				)
+			}
+		</div>
+		<span class="plan">Synthetic household · Base plan</span>
+	</div>
+
+	<div class="body">
+		<section data-panel="retirement">
+			<div class="eyebrow">Retirement · 5,000 trials · today's dollars</div>
+			<div class="headline">Retiring at 55 holds up in <span class="good">91% of futures.</span></div>
+			<div class="kpis">
+				<div><div class="k">Funded ratio</div><div class="v good">1.18×</div></div>
+				<div><div class="k">Confidence holds to</div><div class="v">age 88</div></div>
+				<div><div class="k">Initial withdrawal</div><div class="v">3.4%</div></div>
+				<div><div class="k">Bankrupt trials</div><div class="v warn">2%</div></div>
+			</div>
+			<div class="row">
+				<div class="chart">
+					<svg viewBox="-44 0 590 222" preserveAspectRatio="none" role="img" aria-label="Projected portfolio value from age 42 to 95">
+						<g stroke="#F4F0E6"
+							><line x1="0" y1="190" x2="530" y2="190"></line><line x1="0" y1="140" x2="530" y2="140"></line><line
+								x1="0"
+								y1="90"
+								x2="530"
+								y2="90"></line><line x1="0" y1="40" x2="530" y2="40"></line></g
+						>
+						<g font-size="10" fill="#6F6558" text-anchor="end"
+							><text x="-8" y="193">$0</text><text x="-8" y="143">$2M</text><text x="-8" y="93">$4M</text><text
+								x="-8"
+								y="43">$6M</text
+							></g
+						>
+						<polygon
+							fill="#D4E3D9"
+							points="0,170 60,140 130,85 200,55 280,35 360,25 440,20 530,18 530,188 440,180 360,168 280,155 200,145 130,140 60,160 0,172"
+						></polygon>
+						<polygon
+							fill="#A8C7B5"
+							points="0,170 60,146 130,100 200,82 280,75 360,78 440,85 530,90 530,166 440,158 360,145 280,132 200,125 130,128 60,155 0,171"
+						></polygon>
+						<polyline
+							fill="none"
+							stroke="#1F4A33"
+							stroke-width="2"
+							points="0,170 60,150 130,115 200,105 280,104 360,112 440,122 530,130"></polyline>
+						<g stroke="#6F6558" stroke-dasharray="3 3"
+							><line x1="130" y1="10" x2="130" y2="190"></line><line x1="310" y1="10" x2="310" y2="190"></line></g
+						>
+						<g font-size="10" fill="#3A3530"><text x="134" y="18">Retire · 55</text><text x="314" y="18">RMDs · 73</text></g>
+						<g font-size="10" fill="#6F6558" text-anchor="middle"
+							><text x="0" y="208">42</text><text x="130" y="208">55</text><text x="230" y="208">65</text><text
+								x="310"
+								y="208">73</text
+							><text x="430" y="208">85</text><text x="530" y="208">95</text></g
+						>
+					</svg>
+				</div>
+				<div class="move">
+					<div class="eyebrow green">Next best move</div>
+					<div class="move-title">Fill the 12% bracket with Roth conversions, 55–62</div>
+					<div class="move-text">+3 pts success. Cuts RMDs at 73 by ~$31k/yr.</div>
+				</div>
+			</div>
+		</section>
+
+		<section data-panel="today" hidden>
+			<div class="eyebrow">Today · 2026 cashflow</div>
+			<div class="headline tight">September came in <span class="good">$1,840 under plan.</span></div>
+			<p class="sub">Nine months of actuals, three forecast. August's spike is the furnace — flagged as a one-off.</p>
+			<div class="table">
+				<div class="tr head">
+					<span></span>
+					{months.map((m) => <span class:list={{ forecast: m.forecast }}>{m.label}</span>)}
+				</div>
+				<div class="tr">
+					<span class="rowlabel">Income</span>
+					{months.map((m) => <span class:list={{ forecast: m.forecast }}>{m.income}</span>)}
+				</div>
+				<div class="tr">
+					<span class="rowlabel">Spending</span>
+					{
+						months.map((m) => (
+							<span class:list={{ forecast: m.forecast, outlier: m.outlier }}>
+								<span class="cell">{m.spend}</span>
+							</span>
+						))
+					}
+				</div>
+				<div class="tr saved">
+					<span>Saved</span>
+					{months.map((m) => <span class:list={{ forecast: m.forecast }}>{m.saved}</span>)}
+				</div>
+				<div class="legend"><span>$ thousands</span><span><i>Italic</i> = forecast</span><span>Aug outlier: HVAC, $8.9k</span></div>
+			</div>
+		</section>
+
+		<section data-panel="withdraw" hidden>
+			<div class="eyebrow">Withdraw · decumulation playbook</div>
+			<div class="headline wide">Five doors to your money, <span class="good">in the order to open them.</span></div>
+			<div class="doors">
+				{
+					doors.map((door, i) => (
+						<div class="door">
+							<span class="num">{i + 1}</span>
+							<span class="name">{door.name}</span>
+							<span class="bal">{door.bal}</span>
+							<span class="rule">{door.rule}</span>
+							<span class:list={['opens', { open: door.open }]}>{door.opens}</span>
+						</div>
+					))
+				}
+			</div>
+		</section>
+	</div>
+</div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-pelicash]').forEach((root) => {
+		const tabs = root.querySelectorAll<HTMLButtonElement>('[data-screen]')
+		tabs.forEach((tab) =>
+			tab.addEventListener('click', () => {
+				tabs.forEach((t) => t.setAttribute('aria-pressed', String(t === tab)))
+				root.querySelectorAll<HTMLElement>('[data-panel]').forEach((panel) => {
+					panel.hidden = panel.dataset.panel !== tab.dataset.screen
+				})
+			})
+		)
+	})
+</script>
+
+<style>
+	.pm {
+		--serif: 'Newsreader Variable', Newsreader, serif;
+		width: 1040px;
+		height: 650px;
+		overflow: hidden;
+		background: #f7f5f1;
+		font-family: Inter, system-ui, sans-serif;
+		color: #1f1b16;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.top {
+		display: flex;
+		align-items: center;
+		gap: 22px;
+		padding: 14px 28px;
+		border-bottom: 1px solid #efeae0;
+		background: #fbfaf6;
+	}
+
+	.brand {
+		font-family: var(--serif);
+		font-size: 20px;
+		font-weight: 500;
+		color: #1f4a33;
+	}
+
+	.nav {
+		display: flex;
+		gap: 18px;
+		font-size: 12.5px;
+	}
+
+	.nav button {
+		all: unset;
+		cursor: pointer;
+		color: #3a3530;
+	}
+
+	.nav button[aria-pressed='true'] {
+		color: #1f4a33;
+		font-weight: 600;
+	}
+
+	.nav button:focus-visible {
+		outline: 2px solid #1f4a33;
+		outline-offset: 3px;
+	}
+
+	.nav .off {
+		color: #9a8e7c;
+	}
+
+	.plan {
+		margin-left: auto;
+		font-size: 11.5px;
+		color: #6f6558;
+	}
+
+	.body {
+		padding: 30px 28px;
+		flex: 1;
+		min-height: 0;
+	}
+
+	.eyebrow {
+		font-size: 11px;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: #6f6558;
+		margin-bottom: 10px;
+	}
+
+	.eyebrow.green {
+		color: #1f4a33;
+		margin-bottom: 0;
+	}
+
+	.headline {
+		font-family: var(--serif);
+		font-size: 42px;
+		line-height: 1.05;
+		letter-spacing: -0.02em;
+		margin: 0 0 20px;
+	}
+
+	.headline.tight {
+		margin-bottom: 12px;
+	}
+
+	.headline.wide {
+		margin-bottom: 22px;
+	}
+
+	.good {
+		color: #2f6b4a;
+	}
+
+	.warn {
+		color: #a65a2c;
+	}
+
+	.kpis {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		background: #fff;
+		border: 1px solid #efeae0;
+		border-radius: 14px;
+		overflow: hidden;
+		margin-bottom: 14px;
+	}
+
+	.kpis > div {
+		padding: 14px 20px;
+		border-right: 1px solid #efeae0;
+	}
+
+	.kpis > div:last-child {
+		border-right: 0;
+	}
+
+	.k {
+		font-size: 12px;
+		color: #6f6558;
+		margin-bottom: 4px;
+	}
+
+	.v {
+		font-family: var(--serif);
+		font-size: 28px;
+		font-weight: 500;
+	}
+
+	.row {
+		display: flex;
+		gap: 14px;
+	}
+
+	.chart {
+		flex: 3;
+		background: #fff;
+		border: 1px solid #efeae0;
+		border-radius: 14px;
+		padding: 14px 18px;
+	}
+
+	.chart svg {
+		width: 100%;
+		height: 290px;
+		display: block;
+		font-family: Inter, sans-serif;
+	}
+
+	.move {
+		flex: 1;
+		background: #eff6f1;
+		border: 1px solid #d9e8dd;
+		border-radius: 14px;
+		padding: 18px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.move-title {
+		font-family: var(--serif);
+		font-size: 21px;
+		line-height: 1.2;
+	}
+
+	.move-text {
+		font-size: 13px;
+		line-height: 1.5;
+		color: #3a3530;
+	}
+
+	.sub {
+		font-size: 14.5px;
+		line-height: 1.55;
+		color: #5a5247;
+		margin: 0 0 22px;
+	}
+
+	.table,
+	.doors {
+		background: #fff;
+		border: 1px solid #efeae0;
+		border-radius: 14px;
+	}
+
+	.table {
+		padding: 8px 0;
+	}
+
+	.tr {
+		display: grid;
+		grid-template-columns: 96px repeat(12, 1fr);
+		font-size: 12.5px;
+		padding: 12px 20px;
+		border-bottom: 1px solid #f4f0e6;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.tr > span:not(:first-child) {
+		text-align: right;
+	}
+
+	.tr.head {
+		font-size: 11px;
+		color: #6f6558;
+		padding: 8px 20px;
+	}
+
+	.tr .rowlabel {
+		color: #5a5247;
+	}
+
+	.tr .forecast {
+		font-style: italic;
+		color: #6f6558;
+	}
+
+	.tr .cell {
+		border-radius: 4px;
+		padding: 1px 4px;
+	}
+
+	.tr .outlier {
+		color: #a65a2c;
+	}
+
+	.tr .outlier .cell {
+		background: #fbedda;
+	}
+
+	.tr.saved {
+		font-weight: 500;
+		border-bottom: 0;
+	}
+
+	.tr.saved > span:not(:first-child) {
+		color: #2f6b4a;
+	}
+
+	.tr.saved .forecast {
+		color: #5c8a6f;
+	}
+
+	.legend {
+		display: flex;
+		gap: 18px;
+		padding: 10px 20px 6px;
+		font-size: 11px;
+		color: #6f6558;
+		border-top: 1px solid #f4f0e6;
+	}
+
+	.doors {
+		overflow: hidden;
+	}
+
+	.door {
+		display: grid;
+		grid-template-columns: 28px 1.3fr 80px 1.8fr 64px;
+		gap: 14px;
+		align-items: center;
+		padding: 14px 20px;
+		border-bottom: 1px solid #f4f0e6;
+		font-size: 13px;
+	}
+
+	.num {
+		font-family: var(--serif);
+		font-size: 20px;
+		color: #9a8e7c;
+	}
+
+	.name {
+		font-weight: 500;
+	}
+
+	.bal {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.rule {
+		color: #5a5247;
+		line-height: 1.4;
+	}
+
+	.opens {
+		justify-self: end;
+		font-size: 11.5px;
+		background: #f2eee6;
+		color: #5a5247;
+		border-radius: 99px;
+		padding: 3px 9px;
+		white-space: nowrap;
+	}
+
+	.opens.open {
+		background: #d9e8dd;
+		color: #1f4a33;
+	}
+</style>

@@ -1,0 +1,30 @@
+---
+interface Props {
+	kind: string
+	label: string
+	size?: 'sm' | 'md'
+}
+
+const { kind, label, size = 'sm' } = Astro.props
+---
+
+<span class:list={['chip', 'tag', size]} style={`--ink: var(--kind-${kind}); --tag-bg: var(--kind-${kind}-bg)`}
+	>{label}</span
+>
+
+<style>
+	.tag {
+		font-weight: 500;
+		color: var(--ink);
+		background: var(--tag-bg);
+		padding: 3px 10px;
+	}
+
+	.sm {
+		font-size: 12px;
+	}
+
+	.md {
+		font-size: 13px;
+	}
+</style>

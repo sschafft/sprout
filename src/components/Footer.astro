@@ -1,0 +1,57 @@
+---
+interface Props {
+	contact: { label: string; href: string }[]
+	copyright: string
+	note?: string
+	pandaLink: boolean
+}
+
+const { contact, copyright, note, pandaLink } = Astro.props
+---
+
+<footer id="contact">
+	<div class="links">
+		{contact.map((link) => <a href={link.href}>{link.label}</a>)}
+	</div>
+	<span class="fine">
+		{note && <span class="note">{note} · </span>}
+		{copyright} ·{' '}
+		{
+			pandaLink ? (
+				<a class="plain" href="/about/" title="You found it" aria-label="About, the longer version">
+					🐼
+				</a>
+			) : (
+				<span aria-hidden="true">🐼</span>
+			)
+		}
+	</span>
+</footer>
+
+<style>
+	footer {
+		margin-top: var(--section-gap);
+		padding: 28px 0 40px;
+		border-top: 1px solid var(--line);
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 16px;
+		font-size: 14px;
+	}
+
+	.links {
+		display: flex;
+		gap: 28px;
+		flex-wrap: wrap;
+	}
+
+	.fine {
+		color: var(--muted);
+		flex: none;
+	}
+
+	.fine .note {
+		white-space: normal;
+	}
+</style>

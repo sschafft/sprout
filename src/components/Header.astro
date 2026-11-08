@@ -1,0 +1,33 @@
+---
+interface Props {
+	name: string
+}
+
+const { name } = Astro.props
+---
+
+<header>
+	<a class="name plain" href="/">{name}</a>
+	<slot />
+</header>
+
+<style>
+	header {
+		position: sticky;
+		top: 0;
+		z-index: 5;
+		background: var(--bg);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 16px;
+		padding: 28px 0;
+		border-bottom: 1px solid var(--line);
+		font-size: 14px;
+	}
+
+	.name {
+		font-weight: 600;
+	}
+</style>

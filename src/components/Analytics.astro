@@ -1,0 +1,30 @@
+---
+/**
+ * PostHog web analytics.
+ *
+ * Renders nothing unless PUBLIC_POSTHOG_KEY is set at build time, so local dev
+ * and deploy previews stay out of the data. Production gets the key from netlify.toml.
+ * The library is loaded on demand, after the page is interactive.
+ */
+const enabled = Boolean(import.meta.env.PUBLIC_POSTHOG_KEY)
+---
+
+{
+	enabled && (
+		<script>
+			const key = import.meta.env.PUBLIC_POSTHOG_KEY
+			const host = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
+
+			if (key) {
+				import('posthog-js').then(({ default: posthog }) => {
+					posthog.init(key, {
+						api_host: host,
+						defaults: '2026-08-30',
+						// Anonymous visitors only; nobody logs in to this site.
+						person_profiles: 'identified_only'
+					})
+				})
+			}
+		</script>
+	)
+}
