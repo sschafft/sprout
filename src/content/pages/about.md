@@ -30,7 +30,7 @@ In Vietnam, digging through our first computer in DOS, I found a ninja game a ki
 
 Games kept me learning. I set up networks to play LAN games with my brother, built and overclocked our computers, and was on a first-name basis with the vendors on Chennai's [Ritchie Street](https://en.wikipedia.org/wiki/Ritchie_Street).
 
-I've also been wrong. I bet against the iPhone and spent hours modding the ROM on an [HTC TyTN](https://en.wikipedia.org/wiki/HTC_TyTN_II) instead. Since then: SQL, PHP, Rails, Vue, React, Elixir, Python — and VBA and Drupal, never again.
+I've also erroneously bet against the iPhone and spent hours modding the ROM on an [HTC TyTN](https://en.wikipedia.org/wiki/HTC_TyTN_II) instead. Since then: SQL, PHP, Rails, Vue, React, Elixir, Python — and VBA and Drupal, never again.
 
 ## What I do best
 

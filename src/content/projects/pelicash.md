@@ -23,9 +23,13 @@ credits:
     people: [Scott Schaffter]
 ---
 
+## Why Pelicash
+
+I had used a number of personal finance apps, but none had robust retirement planning tools, so I built one to layer on top.
+
 ## Real inputs
 
-Accounts sync from my personal finance management app into a local database. Nothing leaves the machine.
+Accounts sync from my personal finance management app into a local database.
 
 ## Real models
 

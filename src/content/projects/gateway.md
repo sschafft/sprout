@@ -14,13 +14,13 @@ heroCaption: Gateway Academy marketing site on tablet
 meta:
   - { label: Client, value: 'CGAP (Consultative Group to Assist the Poor), World Bank Group' }
   - { label: Years, value: 2017 — 2020 }
-  - { label: Agency, value: 'Bivee, Inc.' }
+  - { label: Agency, value: 'Bivee, now Høst (post sale)' }
   - { label: Role, value: Managing Director & Engineering Lead }
 credits:
   - role: Client
     note: CGAP & Mastercard Foundation
   - role: Agency
-    note: Bivee, Inc.
+    note: Bivee, now Høst (post sale)
   - role: Design Director
     people: [Jay Perry]
   - role: Managing Director & Engineering Lead

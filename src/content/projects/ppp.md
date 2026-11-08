@@ -14,13 +14,13 @@ heroCaption: PPP Knowledge Lab
 meta:
   - { label: Client, value: World Bank PPP Group & partners }
   - { label: Years, value: 2015 — 2018 }
-  - { label: Agency, value: 'Bivee, Inc.' }
+  - { label: Agency, value: 'Bivee, now Høst (post sale)' }
   - { label: Role, value: Managing Director & Engineering Lead }
 credits:
   - role: Client
     note: World Bank Group & partners
   - role: Agency
-    note: Bivee, Inc.
+    note: Bivee, now Høst (post sale)
   - role: Design Director
     people: [Jay Perry]
   - role: Managing Director & Engineering Lead

@@ -14,7 +14,7 @@ heroCaption: Micronutrient Survey Toolkit
 meta:
   - { label: Client, value: 'CDC, with UNICEF, WHO & Nutrition International' }
   - { label: Years, value: 2015 — 2020 }
-  - { label: Studio, value: 'Bivee, now Høst (post sale)' }
+  - { label: Agency, value: 'Bivee, now Høst (post sale)' }
   - { label: Role, value: Managing Director & Engineering Lead }
 links:
   - { label: surveytoolkit.nutritionintl.org ↗, href: 'https://surveytoolkit.nutritionintl.org/' }
@@ -27,7 +27,7 @@ credits:
     note: Centers for Disease Control and Prevention
   - role: Partners
     note: UNICEF, WHO, Nutrition International
-  - role: Studio
+  - role: Agency
     note: Bivee, now Høst (post sale)
   - role: Managing Director & Engineering Lead
     people: [Scott Schaffter]

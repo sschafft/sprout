@@ -26,9 +26,13 @@ credits:
     people: [Scott Schaffter]
 ---
 
-## The setup
+## Why Tessera
 
-Two players, one picture. The guider can see the goal; the builder can only see an empty board. They talk it through on a call and try to make the same image.
+I love facilitating, and one of the most effective games I’ve run with groups is the Lego game. It helps people see that many of the difficulties between teams come from structures, boundaries, communication gaps, and invisible complexity, not from any single person. There was no easy way to run it with remote groups, so I built Tessera.
+
+## The game
+
+Two players, one puzzle. The guider can see the goal; the builder can only see an empty board. They talk it through on a call and try to make the same image.
 
 ## The twist
 

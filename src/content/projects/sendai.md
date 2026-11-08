@@ -14,13 +14,13 @@ heroCaption: Sendai report, cover
 meta:
   - { label: Client, value: 'World Bank, Global Facility for Disaster Reduction and Recovery (GFDRR)' }
   - { label: Year, value: '2015' }
-  - { label: Agency, value: Bivee }
+  - { label: Agency, value: 'Bivee, now Høst (post sale)' }
   - { label: Role, value: Managing Director & Engineering Lead }
 credits:
   - role: Client
     note: World Bank, GFDRR
   - role: Agency
-    note: Bivee
+    note: Bivee, now Høst (post sale)
   - role: Design Director
     people: [Jay Perry]
   - role: Managing Director & Engineering Lead
