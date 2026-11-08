@@ -1,7 +1,7 @@
 # Copy for the home page. The work list itself is built from content/projects/.
 
 # A trailing full stop is drawn in the accent colour.
-headline: I build software where people and systems dance.
+headline: I build software where people and systems meet.
 
 # Round portrait beside the headline. Path is relative to this file.
 photo: ../assets/profile.jpeg

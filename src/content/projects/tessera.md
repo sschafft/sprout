@@ -28,7 +28,7 @@ credits:
 
 ## Why Tessera
 
-I love facilitating, and one of the most effective games I’ve run with groups is the Lego game. It helps people see that many of the difficulties between teams come from structures, boundaries, communication gaps, and invisible complexity, not from any single person. There was no easy way to run it with remote groups, so I built Tessera.
+I love facilitating, and one of the most effective games I’ve run with groups is the [Lego game](https://experientiallearning.org/en-gb/blog/the-lego-challenge-team-building-activity-instructions-and-alternatives/). It helps people see that many of the difficulties between teams come from structures, boundaries, communication gaps, and invisible complexity, not from any single person. There was no easy way to run it with remote groups, so I built Tessera.
 
 ## The game
 
