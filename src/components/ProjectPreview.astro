@@ -7,9 +7,11 @@ interface Props {
 	project: Project
 	/** `thumb` is the small, non-interactive work list tile; `hero` leads a case study. */
 	variant: 'thumb' | 'hero'
+	/** Load the image straight away instead of lazily. Heroes always do. */
+	eager?: boolean
 }
 
-const { project, variant } = Astro.props
+const { project, variant, eager = false } = Astro.props
 const { title, hero, mock } = project.data
 const thumb = variant === 'thumb'
 ---
@@ -22,7 +24,7 @@ const thumb = variant === 'thumb'
 				alt={thumb ? '' : `${title} preview`}
 				widths={thumb ? [180, 360, 720] : [640, 1152, 1600, 2304]}
 				sizes={thumb ? '(max-width: 820px) 100vw, 180px' : '(max-width: 1280px) 100vw, 1152px'}
-				loading={thumb ? 'lazy' : 'eager'}
+				loading={thumb && !eager ? 'lazy' : 'eager'}
 			/>
 		) : mock === 'pelicash' ? (
 			<PelicashMock inert={thumb} />

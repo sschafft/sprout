@@ -32,9 +32,9 @@ Games kept me learning. I set up networks to play LAN games with my brother, bui
 
 I've also erroneously bet against the iPhone and spent hours modding the ROM on an [HTC TyTN](https://en.wikipedia.org/wiki/HTC_TyTN_II) instead. Since then: SQL, PHP, Rails, Vue, React, Elixir, Python — and VBA and Drupal, never again.
 
-## What I do best
+## Something I enjoy deeply
 
-I love teaching. I taught English in El Salvador, Kyrgyzstan, and China, and later designed training and ran large workshops using adult-learning theory.
+Taking something complex and making it tractable. I taught English in El Salvador, Kyrgyzstan, and China, later designed training and ran large workshops using adult-learning theory, and now do the same thing with systems: find the shape of the problem, name the parts, and give a team something it can act on.
 
 My best work combines the two: building tools that help people reach their goals. I pick what fits the problem, not what's shiny or familiar.
 
@@ -46,4 +46,4 @@ Much of my career was in international development. It runs in the family — we
 
 Lately I've built internal infrastructure at Google, which has been its own anthropological deep dive.
 
-I'm happiest deep in a hard problem with a team that cares more about the process than the output.
+I'm happiest deep in a hard problem with a team that cares about the craft as much as the output.

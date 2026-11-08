@@ -38,6 +38,8 @@ const projects = defineCollection({
 			ongoing: z.boolean().default(false),
 			/** Tie-breaker when the dates match. Higher comes first. */
 			priority: z.number().default(0),
+			/** Featured projects show on the home page before "Show all" is pressed. */
+			featured: z.boolean().default(false),
 			/** The project's live site, if it has one. */
 			url: z.url().optional(),
 			/** Thumbnail and case study lead image. For a live site, use a screenshot. */
@@ -85,6 +87,8 @@ const site = defineCollection({
 		nav: z.array(link),
 		contact: z.array(link),
 		copyright: z.string(),
+		/** Small print beside the copyright, e.g. a personal-site disclaimer. */
+		footerNote: z.string().optional(),
 		groups: z.record(z.enum(GROUPS), z.object({ label: z.string(), note: z.string() })),
 		kinds: z.record(z.enum(KINDS), z.string())
 	})
@@ -98,7 +102,7 @@ const home = defineCollection({
 		photo: image(),
 		photoAlt: z.string(),
 		facts: z.array(z.object({ label: z.string(), text: z.string() })),
-		work: z.object({ heading: z.string(), allLabel: z.string(), countLabel: z.string() }),
+		work: z.object({ heading: z.string(), allLabel: z.string(), countLabel: z.string(), moreLabel: z.string() }),
 		experience: z.object({
 			heading: z.string(),
 			jobs: z.array(
@@ -114,6 +118,8 @@ const home = defineCollection({
 			intro: z.string(),
 			thanksLabel: z.string(),
 			thanksText: z.string(),
+			/** How many cards to show. Cards with the most project chips come first. */
+			limit: z.number().int().positive().optional(),
 			family: z.array(z.string())
 		}),
 		about: z.object({ heading: z.string(), text: z.string() })

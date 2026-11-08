@@ -5,6 +5,7 @@ tagline: AI drafting for RFPs, grants, and vendor questionnaires, built for the 
 blurb: AI drafting for RFPs, grants, and vendor questionnaires. Scores the fit, drafts every answer from your documents, and flags the few that need you.
 org: AI for proposals · beta
 years: Ongoing
+featured: true
 group: recent
 kind: live
 started: 2026

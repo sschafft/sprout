@@ -57,7 +57,7 @@ const socialImage = new URL('/social-card.png', Astro.site)
 		<div class="page">
 			<Header name={site.name}><slot name="nav" /></Header>
 			<main id="main"><slot /></main>
-			<Footer contact={site.contact} copyright={site.copyright} pandaLink={pandaLink} />
+			<Footer contact={site.contact} copyright={site.copyright} note={site.footerNote} pandaLink={pandaLink} />
 		</div>
 
 		<script>

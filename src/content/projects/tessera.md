@@ -5,6 +5,7 @@ tagline: A workshop game that makes the gaps in how a team communicates visible 
 blurb: A builder and a guider each get a secret brief and try to make the same picture, so the gaps in how a team communicates show up on screen.
 org: Workshop game · open source
 years: '2026'
+featured: true
 group: recent
 kind: live
 started: 2026

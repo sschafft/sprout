@@ -5,6 +5,7 @@ tagline: Model cards were built for people to read. As models fork and fine-tune
 blurb: A machine-readable spec for documenting AI models that traces what each model inherits from its foundation model, with a hosted record browser.
 org: Research · NeurIPS workshop paper
 years: '2024'
+featured: true
 group: recent
 kind: live
 started: 2024

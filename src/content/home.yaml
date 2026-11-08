@@ -1,7 +1,7 @@
 # Copy for the home page. The work list itself is built from content/projects/.
 
 # A trailing full stop is drawn in the accent colour.
-headline: I build software where people and systems meet.
+headline: Staff engineer at Google. I build data infrastructure by day and an AI bidding tool by night.
 
 # Round portrait beside the headline. Path is relative to this file.
 photo: ../assets/profile.jpeg
@@ -19,6 +19,7 @@ work:
   heading: Work
   allLabel: All
   countLabel: projects
+  moreLabel: Show all
 
 experience:
   heading: Experience
@@ -48,10 +49,11 @@ people:
   intro: The people around me make me who I am, and I'm grateful to mostly not have to work alone. Here are some of the people I've made things with.
   thanksLabel: Special thanks
   thanksText: To the people I'm building my most fun & complex project with.
+  limit: 5
   family:
-    - Taylor Schaffter
-    - Calvin Schaffter
-    - June Schaffter
+    - Taylor
+    - Calvin
+    - June
 
 about:
   heading: About

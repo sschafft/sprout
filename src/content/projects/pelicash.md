@@ -14,7 +14,7 @@ heroCaption: Interactive mock with a synthetic household; not real numbers
 meta:
   - { label: Type, value: Local-first web app }
   - { label: Stack, value: 'Python, FastAPI, SQLite, React' }
-  - { label: Role, value: Everything }
+  - { label: Role, value: Design + build }
   - { label: Status, value: 'Private, runs locally' }
 links:
   - { label: Demo on request, href: 'mailto:scott@schaffters.com?subject=Pelicash' }

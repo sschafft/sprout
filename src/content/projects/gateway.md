@@ -2,9 +2,10 @@
 title: Gateway Academy
 kicker: Bivee · 2017–2020
 tagline: An e-learning platform helping banks in Sub-Saharan East Africa better serve their poorest customers.
-blurb: A mobile- and offline-first learning platform for financial-institution staff across Sub-Saharan Africa.
+blurb: A mobile- and offline-first learning platform for financial-institution staff across Sub-Saharan East Africa.
 org: CGAP & Mastercard Foundation
 years: 2017–20
+featured: true
 group: bivee
 kind: client
 started: 2017
@@ -49,6 +50,3 @@ Over several years of continuous development, the team built a comprehensive sty
 In 2020 Gateway Academy merged into Digital Frontiers, carrying its content and learners forward.
 
 ![Styleguide · themes](../../assets/work/gateway-sg-themes.jpeg)
-![Styleguide · color](../../assets/work/gateway-sg-color.jpeg)
-![Styleguide · type](../../assets/work/gateway-sg-font.jpeg)
-![Styleguide · logo](../../assets/work/gateway-sg-logo.jpeg)

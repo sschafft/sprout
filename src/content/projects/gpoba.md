@@ -53,4 +53,3 @@ GPOBA liked the report enough to ask us to document the design language for thei
 We couldn’t change everything, including the logo, but documenting specific guidelines was a real step for a small team just starting to build an identity of its own.
 
 ![Styleguide · color](../../assets/work/gpoba-styleguide-color.jpeg)
-![Styleguide · type](../../assets/work/gpoba-styleguide-type.jpeg)

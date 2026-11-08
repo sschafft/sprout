@@ -8,9 +8,11 @@ import { getHome, getPeople, getProjects, getSite, splitAccentDot } from '@/lib/
 const site = await getSite()
 const home = await getHome()
 const projects = await getProjects(site)
-const people = await getPeople(site, projects)
+const people = (await getPeople(site, projects)).slice(0, home.people.limit ?? Infinity)
 
 const headline = splitAccentDot(home.headline)
+/** With featured projects the list starts short and a button shows the rest. */
+const collapsed = projects.some((p) => p.entry.data.featured)
 const groups = Object.entries(site.groups).filter(([id]) => projects.some((p) => p.entry.data.group === id))
 ---
 
@@ -36,68 +38,7 @@ const groups = Object.entries(site.groups).filter(([id]) => projects.some((p) =>
 		</div>
 	</section>
 
-	<section id="work">
-		<div class="bar work-bar">
-			<h2>{home.work.heading}</h2>
-			<div class="filters" role="group" aria-label="Filter projects">
-				<button type="button" data-filter="all" aria-pressed="true">{home.work.allLabel}</button>
-				{
-					groups.map(([id, group]) => (
-						<button type="button" data-filter={id} aria-pressed="false">
-							{group.label}
-						</button>
-					))
-				}
-			</div>
-			<span class="count" aria-live="polite"><span data-count>{projects.length}</span> {home.work.countLabel}</span>
-		</div>
-
-		{
-			projects.map(({ entry, n, href }, i) => {
-				const p = entry.data
-				const firstInGroup = i === 0 || projects[i - 1]!.entry.data.group !== p.group
-				return (
-					<>
-						{firstInGroup && (
-							<div class="group-head" data-group-head={p.group}>
-								<span class="accent">{site.groups[p.group]!.label}</span>
-								<span>{site.groups[p.group]!.note}</span>
-							</div>
-						)}
-						<article class="project" data-group={p.group}>
-							<span class="n">{n}</span>
-							<a class="thumb" href={href} tabindex="-1" aria-hidden="true">
-								<ProjectPreview project={entry} variant="thumb" />
-							</a>
-							<div class="what">
-								<h3>
-									<a class="plain" href={href}>
-										{p.title}
-									</a>
-								</h3>
-								<div class="org">{p.org}</div>
-								<KindTag kind={p.kind} label={site.kinds[p.kind]!} />
-							</div>
-							<div class="why">
-								<p>{p.blurb}</p>
-								<div class="links">
-									<a class="accent" href={href}>
-										Case study →<span class="sr-only">: {p.title}</span>
-									</a>
-									{p.links.map((link) => (
-										<a href={link.href}>{link.label}</a>
-									))}
-								</div>
-							</div>
-							<span class="years">{p.years}</span>
-						</article>
-					</>
-				)
-			})
-		}
-	</section>
-
-	<section id="experience" class="block">
+	<section id="experience">
 		<div class="bar"><h2>{home.experience.heading}</h2></div>
 		{
 			home.experience.jobs.map((job) => (
@@ -128,6 +69,93 @@ const groups = Object.entries(site.groups).filter(([id]) => projects.some((p) =>
 			))
 		}
 	</section>
+
+	<section id="work" class:list={['block', { collapsed }]}>
+		<div class="bar work-bar">
+			<h2>{home.work.heading}</h2>
+			<div class="filters" role="group" aria-label="Filter projects">
+				<button type="button" data-filter="all" aria-pressed="true">{home.work.allLabel}</button>
+				{
+					groups.map(([id, group]) => (
+						<button type="button" data-filter={id} aria-pressed="false">
+							{group.label}
+						</button>
+					))
+				}
+			</div>
+			<span class="count" aria-live="polite"><span data-count>{projects.length}</span> {home.work.countLabel}</span>
+		</div>
+
+		{
+			projects.map(({ entry, n, href }, i) => {
+				const p = entry.data
+				const firstInGroup = i === 0 || projects[i - 1]!.entry.data.group !== p.group
+				return (
+					<>
+						{firstInGroup && (
+							<div class="group-head" data-group-head={p.group} data-more>
+								<span class="accent">{site.groups[p.group]!.label}</span>
+								<span>{site.groups[p.group]!.note}</span>
+							</div>
+						)}
+						<article class="project" data-group={p.group} data-more={collapsed && !p.featured ? '' : undefined}>
+							<span class="n">{n}</span>
+							<a class="thumb" href={href} tabindex="-1" aria-hidden="true">
+								<ProjectPreview project={entry} variant="thumb" eager={p.featured} />
+							</a>
+							<div class="what">
+								<h3>
+									<a class="plain" href={href}>
+										{p.title}
+									</a>
+								</h3>
+								<div class="org">{p.org}</div>
+								<KindTag kind={p.kind} label={site.kinds[p.kind]!} />
+							</div>
+							<div class="why">
+								<p>{p.blurb}</p>
+								<div class="links">
+									<a class="accent" href={href}>
+										Case study →<span class="sr-only">: {p.title}</span>
+									</a>
+									{p.links.map((link) => (
+										<a href={link.href}>{link.label}</a>
+									))}
+								</div>
+							</div>
+							<span class="years">{p.years}</span>
+						</article>
+					</>
+				)
+			})
+		}
+
+		{
+			collapsed && (
+				<button type="button" class="more" data-more-button>
+					{home.work.moreLabel} {projects.length} {home.work.countLabel} →
+				</button>
+			)
+		}
+	</section>
+
+	<noscript>
+		<style>
+			/* Without JavaScript the "Show all" button cannot work, so list everything. */
+			#work.collapsed .project[data-more] {
+				display: grid;
+			}
+			#work.collapsed .group-head[data-more] {
+				display: flex;
+			}
+			#work.collapsed .count {
+				display: inline;
+			}
+			#work .more {
+				display: none;
+			}
+		</style>
+	</noscript>
 
 	<section id="people" class="block">
 		<div class="bar">
@@ -178,14 +206,25 @@ const groups = Object.entries(site.groups).filter(([id]) => projects.some((p) =>
 </BaseLayout>
 
 <script>
-	// Work list filter. Without JavaScript every project simply stays visible.
+	// Work list: "Show all" and the group filter. Without JavaScript every project simply stays visible.
+	const work = document.getElementById('work')
+	const more = document.querySelector<HTMLButtonElement>('[data-more-button]')
 	const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]')
 	const rows = document.querySelectorAll<HTMLElement>('[data-group]')
 	const heads = document.querySelectorAll<HTMLElement>('[data-group-head]')
 	const count = document.querySelector('[data-count]')
 
+	const expand = () => work?.classList.remove('collapsed')
+
+	more?.addEventListener('click', () => {
+		expand()
+		// Put focus on the first newly revealed project so keyboard users land in the list.
+		document.querySelector<HTMLAnchorElement>('.project[data-more] h3 a')?.focus()
+	})
+
 	buttons.forEach((button) =>
 		button.addEventListener('click', () => {
+			expand()
 			const filter = button.dataset.filter
 			const all = filter === 'all'
 			let shown = 0
@@ -331,6 +370,34 @@ const groups = Object.entries(site.groups).filter(([id]) => projects.some((p) =>
 
 	[hidden] {
 		display: none !important;
+	}
+
+	.collapsed [data-more],
+	.collapsed .count {
+		display: none;
+	}
+
+	.more {
+		display: block;
+		width: 100%;
+		cursor: pointer;
+		font: inherit;
+		font-size: 14px;
+		font-weight: 500;
+		text-align: left;
+		color: var(--accent);
+		background: none;
+		border: 0;
+		border-top: 1px solid var(--line);
+		padding: 20px 0 4px calc(32px + var(--col-gap));
+	}
+
+	.more:hover {
+		text-decoration: underline;
+	}
+
+	#work:not(.collapsed) .more {
+		display: none;
 	}
 
 	.n {
@@ -579,6 +646,10 @@ const groups = Object.entries(site.groups).filter(([id]) => projects.some((p) =>
 		.about {
 			grid-template-columns: minmax(0, 1fr);
 			gap: 12px;
+		}
+
+		.more {
+			padding-left: 0;
 		}
 	}
 </style>
